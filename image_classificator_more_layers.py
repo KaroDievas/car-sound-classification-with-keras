@@ -9,9 +9,9 @@ img_width, img_height = 256, 256
 
 train_data_dir = 'data/four_classes/train'
 validation_data_dir = 'data/four_classes/validation'
-nb_train_samples = 50
+nb_train_samples = 40
 nb_validation_samples = 50
-nb_epoch = 40
+nb_epoch = 100
 
 
 model = Sequential()
