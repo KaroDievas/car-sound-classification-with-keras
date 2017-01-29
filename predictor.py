@@ -3,6 +3,7 @@ from keras.models import Sequential
 from keras.layers import Convolution2D, MaxPooling2D
 from keras.layers import Activation, Dropout, Flatten, Dense
 from keras.preprocessing import image
+import numpy as np
 
 # dimensions of our images.
 img_width, img_height = 256, 256
@@ -53,7 +54,7 @@ model.compile(loss='categorical_crossentropy',
 model.load_weights('third_try.h5')
 			  
 img_path = 'data/one_class/validation/audi/Balsas069_10.PNG'
-img = image.load_img(img_path, target_size=(224, 224))
+img = image.load_img(img_path, target_size=(256, 256))
 x = image.img_to_array(img)
 x = np.expand_dims(x, axis=0)
 x = preprocess_input(x)
