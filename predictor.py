@@ -57,7 +57,6 @@ img_path = 'data/one_class/validation/audi/Balsas069_10.PNG'
 img = image.load_img(img_path, target_size=(256, 256))
 x = image.img_to_array(img)
 x = np.expand_dims(x, axis=0)
-x = preprocess_input(x)
 
 preds = model.predict(x)
-print('Predicted:', decode_predictions(preds))
+print('Predicted:', preds)
