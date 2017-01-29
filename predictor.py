@@ -52,4 +52,11 @@ model.compile(loss='categorical_crossentropy',
 
 model.load_weights('third_try.h5')
 			  
-model.predict_classes(self, validation_data_dir, batch_size=5, verbose=1)
+img_path = 'data/one_class/validation/audi/Balsas069_10.PNG'
+img = image.load_img(img_path, target_size=(224, 224))
+x = image.img_to_array(img)
+x = np.expand_dims(x, axis=0)
+x = preprocess_input(x)
+
+preds = model.predict(x)
+print('Predicted:', decode_predictions(preds))
