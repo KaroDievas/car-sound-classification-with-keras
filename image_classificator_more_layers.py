@@ -9,7 +9,7 @@ img_width, img_height = 256, 256
 
 train_data_dir = 'data/four_classes/train'
 validation_data_dir = 'data/four_classes/validation'
-nb_train_samples = 40
+nb_train_samples = 50
 nb_validation_samples = 50
 nb_epoch = 100
 
@@ -64,13 +64,13 @@ test_datagen = ImageDataGenerator(rescale=1./255)
 train_generator = train_datagen.flow_from_directory(
         train_data_dir,
         target_size=(img_width, img_height),
-        batch_size=32,
+        batch_size=5,
         class_mode='categorical')
 
 validation_generator = test_datagen.flow_from_directory(
         validation_data_dir,
         target_size=(img_width, img_height),
-        batch_size=32,
+        batch_size=5,
         class_mode='categorical')
 
 model.fit_generator(
