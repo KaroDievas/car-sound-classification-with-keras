@@ -7,8 +7,8 @@ from keras.layers import Activation, Dropout, Flatten, Dense
 # dimensions of our images.
 img_width, img_height = 1200, 800
 
-train_data_dir = 'data/four_classes/train'
-validation_data_dir = 'data/four_classes/validation'
+train_data_dir = 'data/big_pictures/train'
+validation_data_dir = 'data/big_pictures/validation'
 nb_train_samples = 50
 nb_validation_samples = 50
 nb_epoch = 100
