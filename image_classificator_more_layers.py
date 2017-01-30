@@ -5,7 +5,7 @@ from keras.layers import Activation, Dropout, Flatten, Dense
 
 
 # dimensions of our images.
-img_width, img_height = 256, 256
+img_width, img_height = 1200, 800
 
 train_data_dir = 'data/four_classes/train'
 validation_data_dir = 'data/four_classes/validation'
@@ -80,4 +80,4 @@ model.fit_generator(
         validation_data=validation_generator,
         nb_val_samples=nb_validation_samples)
 
-model.save_weights('third_try.h5')
+model.save_weights('large_scale.h5')
