@@ -80,4 +80,4 @@ model.fit_generator(
         validation_data=validation_generator,
         nb_val_samples=nb_validation_samples)
 
-model.save_weights('large_scale.h5')
+model.save_weights('large_scale_1200x800.h5')

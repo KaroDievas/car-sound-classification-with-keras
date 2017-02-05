@@ -7,8 +7,8 @@ from keras.layers import Activation, Dropout, Flatten, Dense
 # dimensions of our images.
 img_width, img_height = 256, 256
 
-train_data_dir = 'data/four_classes/train'
-validation_data_dir = 'data/four_classes/validation'
+train_data_dir = 'data/big_pictures/train'
+validation_data_dir = 'data/big_pictures/validation'
 nb_train_samples = 50
 nb_validation_samples = 50
 nb_epoch = 50
@@ -52,13 +52,13 @@ test_datagen = ImageDataGenerator(rescale=1./255)
 train_generator = train_datagen.flow_from_directory(
         train_data_dir,
         target_size=(img_width, img_height),
-        batch_size=32,
+        batch_size=5,
         class_mode='categorical')
 
 validation_generator = test_datagen.flow_from_directory(
         validation_data_dir,
         target_size=(img_width, img_height),
-        batch_size=32,
+        batch_size=5,
         class_mode='categorical')
 
 model.fit_generator(
@@ -68,4 +68,4 @@ model.fit_generator(
         validation_data=validation_generator,
         nb_val_samples=nb_validation_samples)
 
-model.save_weights('second_try.h5')
+model.save_weights('smaller_scale_256x256.h5')
