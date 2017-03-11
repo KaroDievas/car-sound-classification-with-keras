@@ -4,12 +4,13 @@ from keras.layers import Convolution2D, MaxPooling2D
 from keras.layers import Activation, Dropout, Flatten, Dense
 from keras.preprocessing import image
 import numpy as np
+import sys
 
 # dimensions of our images.
 img_width, img_height = 256, 256
 
-train_data_dir = 'data/four_classes/train'
-validation_data_dir = 'data/four_classes/validation'
+train_data_dir = 'data/small_pictures/train'
+validation_data_dir = 'data/small_pictures/validation'
 nb_train_samples = 50
 nb_validation_samples = 50
 nb_epoch = 100
@@ -51,10 +52,15 @@ model.compile(loss='categorical_crossentropy',
               optimizer='rmsprop',
               metrics=['accuracy'])
 
-model.load_weights('third_try.h5')
-			  
-img_path = 'data/one_class/validation/audi/Balsas069_10.PNG'
-img = image.load_img(img_path, target_size=(256, 256))
+# loading precompiled model
+model.load_weights('models/smaller_scale_256x256.h5')
+
+print 'arguments: ', 
+
+# path to file which need to predict		  
+img_path = sys.argv[1]
+# target_size must be same as model input size
+img = image.load_img(img_path, target_size=(img_width, img_height))
 x = image.img_to_array(img)
 x = np.expand_dims(x, axis=0)
 

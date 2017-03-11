@@ -5,13 +5,13 @@ from keras.layers import Activation, Dropout, Flatten, Dense
 
 
 # dimensions of our images.
-img_width, img_height = 1200, 800
+img_width, img_height = 256, 256
 
 train_data_dir = 'data/big_pictures/train'
 validation_data_dir = 'data/big_pictures/validation'
 nb_train_samples = 50
 nb_validation_samples = 50
-nb_epoch = 100
+nb_epoch = 10
 
 
 model = Sequential()
