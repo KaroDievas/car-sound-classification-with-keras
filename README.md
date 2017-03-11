@@ -32,4 +32,16 @@ For training and saving model:
 - python image_classificator_mode_layers.py
 
 For predicting with non trained data:
-- python predictor.py
+- python predictor.py [path to file which you want to predict]
+
+Prediction example:
+- python predictor.py data/experiment/pictures/Balsas087-audi.PNG
+
+Result:
+-  ('Predicted:', array([[ 0.,  0.,  1.,  0.]], dtype=float32))
+
+Regarding class dictionary:
+- ('class dictionary', {'suzuki': 3, 'kia': 1, 'nissan': 2, 'audi': 0})
+- Prediction failed. Because in this audio stream was hearing other car engine sound.
+
+
