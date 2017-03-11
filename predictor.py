@@ -65,4 +65,5 @@ x = image.img_to_array(img)
 x = np.expand_dims(x, axis=0)
 
 preds = model.predict(x)
+# prints predics array of four classes
 print('Predicted:', preds)
