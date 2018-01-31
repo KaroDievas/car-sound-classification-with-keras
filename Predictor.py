@@ -2,16 +2,18 @@ from keras.preprocessing.image import ImageDataGenerator
 from keras.models import Sequential
 from keras.layers import Convolution2D, MaxPooling2D
 from keras.layers import Activation, Dropout, Flatten, Dense
-
+from keras.preprocessing import image
+import numpy as np
+import sys
 
 # dimensions of our images.
 img_width, img_height = 256, 256
 
-train_data_dir = 'data/big_pictures/train'
-validation_data_dir = 'data/big_pictures/validation'
+train_data_dir = 'Data/small_pictures/train'
+validation_data_dir = 'Data/small_pictures/validation'
 nb_train_samples = 50
 nb_validation_samples = 50
-nb_epoch = 10
+nb_epoch = 100
 
 
 model = Sequential()
@@ -50,38 +52,18 @@ model.compile(loss='categorical_crossentropy',
               optimizer='rmsprop',
               metrics=['accuracy'])
 
-# this is the augmentation configuration we will use for training
-train_datagen = ImageDataGenerator(
-        rescale=1./255,
-        shear_range=0.2,
-        zoom_range=0.2,
-        horizontal_flip=True)
+# loading precompiled model
+model.load_weights('TrainedModels/smaller_scale_256x256.h5')
 
-# this is the augmentation configuration we will use for testing:
-# only rescaling
-test_datagen = ImageDataGenerator(rescale=1./255)
+print 'arguments: ', 
 
-train_generator = train_datagen.flow_from_directory(
-        train_data_dir,
-        target_size=(img_width, img_height),
-        batch_size=5,
-        class_mode='categorical')
+# path to file which need to predict		  
+img_path = sys.argv[1]
+# target_size must be same as model input size
+img = image.load_img(img_path, target_size=(img_width, img_height))
+x = image.img_to_array(img)
+x = np.expand_dims(x, axis=0)
 
-class_dictionary = train_generator.class_indices
-
-print('class dictionary', class_dictionary)
-
-validation_generator = test_datagen.flow_from_directory(
-        validation_data_dir,
-        target_size=(img_width, img_height),
-        batch_size=5,
-        class_mode='categorical')
-
-model.fit_generator(
-        train_generator,
-        samples_per_epoch=nb_train_samples,
-        nb_epoch=nb_epoch,
-        validation_data=validation_generator,
-        nb_val_samples=nb_validation_samples)
-
-model.save_weights('large_scale_1200x800.h5')
+preds = model.predict_classes(x)
+# prints predics array of four classes
+print('Predicted:', preds)

@@ -1,0 +1,3 @@
+build/*
+dist/*
+CarSoundClassificationWithKeras.egg-info/*

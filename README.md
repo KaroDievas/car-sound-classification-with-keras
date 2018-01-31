@@ -21,21 +21,20 @@ Pictures was generated using Wavelet sound explorer http://stevehanov.ca/wavelet
 - Ubuntu 16.04 LTS
 - Keras
 - Python 2.7
+- pip >= 9.*
 
 # Instalation
-- Install python 2.7
-- Install Keras 
-- Install Theano or TensorFlow (I runned it on TensorFlow CPU and GPU versions)
+- python setup.py install --user
 
 # Running
 For training and saving model:
-- python image_classificator_mode_layers.py
+- python ImageClassificatorModeLayers.py
 
 For predicting with non trained data:
-- python predictor.py [path to file which you want to predict]
+- python Predictor.py [path to file which you want to predict]
 
 Prediction example:
-- python predictor.py data/experiment/pictures/Balsas087-audi.PNG
+- python Predictor.py Data/experiment/pictures/Balsas087-audi.PNG
 
 Result:
 -  ('Predicted:', array([[ 0.,  0.,  1.,  0.]], dtype=float32))
