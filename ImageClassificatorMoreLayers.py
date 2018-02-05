@@ -2,7 +2,12 @@ from keras.preprocessing.image import ImageDataGenerator
 from keras.models import Sequential
 from keras.layers import Convolution2D, MaxPooling2D
 from keras.layers import Activation, Dropout, Flatten, Dense
-
+import tensorflow as tf
+from keras import backend as K
+K.set_image_dim_ordering('th')
+config = tf.ConfigProto()
+config.gpu_options.allow_growth = True
+session = tf.Session(config=config)
 
 # dimensions of our images.
 img_width, img_height = 256, 256
@@ -11,7 +16,7 @@ train_data_dir = 'Data/big_pictures/train'
 validation_data_dir = 'Data/big_pictures/validation'
 nb_train_samples = 50
 nb_validation_samples = 50
-nb_epoch = 10
+nb_epoch = 50
 
 
 model = Sequential()

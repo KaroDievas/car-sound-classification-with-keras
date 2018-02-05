@@ -5,6 +5,12 @@ from keras.layers import Activation, Dropout, Flatten, Dense
 from keras.preprocessing import image
 import numpy as np
 import sys
+import tensorflow as tf
+from keras import backend as K
+K.set_image_dim_ordering('th')
+config = tf.ConfigProto()
+config.gpu_options.allow_growth = True
+session = tf.Session(config=config)
 
 # dimensions of our images.
 img_width, img_height = 256, 256
@@ -53,9 +59,9 @@ model.compile(loss='categorical_crossentropy',
               metrics=['accuracy'])
 
 # loading precompiled model
-model.load_weights('TrainedModels/smaller_scale_256x256.h5')
+model.load_weights('large_scale_1200x800.h5')
 
-print 'arguments: ', 
+print ('arguments: ')
 
 # path to file which need to predict		  
 img_path = sys.argv[1]
