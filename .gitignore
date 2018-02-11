@@ -1,3 +1,5 @@
 build/*
 dist/*
 CarSoundClassificationWithKeras.egg-info/*
+.idea
+venv
