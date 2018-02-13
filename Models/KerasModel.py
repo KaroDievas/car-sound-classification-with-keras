@@ -4,9 +4,7 @@ from keras.layers import Activation, Dropout, Flatten, Dense
 
 
 class KerasModel:
-    def get_model(self):
-        img_width, img_height = 256, 256
-
+    def get_model(self, img_width, img_height):
         model = Sequential()
         model.add(Convolution2D(32, 3, 3, input_shape=(3, img_width, img_height)))
         model.add(Activation('relu'))

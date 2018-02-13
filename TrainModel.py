@@ -17,7 +17,7 @@ nb_validation_samples = 50
 nb_epoch = 50
 
 kerasModel = KerasModel()
-model = kerasModel.get_model()
+model = kerasModel.get_model(img_width, img_height)
 
 model.compile(loss='categorical_crossentropy',
               optimizer='rmsprop',
