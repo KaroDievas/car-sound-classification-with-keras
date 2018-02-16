@@ -3,3 +3,4 @@ dist/*
 CarSoundClassificationWithKeras.egg-info/*
 .idea
 venv
+__pycache__

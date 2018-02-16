@@ -1,4 +1,5 @@
 from setuptools import setup, find_packages
+
 setup(
     version='1.0',
     name='CarSoundClassificationWithKeras',
@@ -8,11 +9,12 @@ setup(
     url='https://github.com/KaroDievas/car-sound-classification-with-keras',
     license='MIT',
     install_requires=[
-    	'keras',
-	'pydub',
-	'theano',
-	'tensorflow',
-	'numpy',
+        'keras',
+        'pydub',
+        'theano',
+        'tensorflow',
+        'numpy',
+        'librosa'
     ],
-    python_requires='~=2.7',
+    python_requires='~=3.5',
 )
