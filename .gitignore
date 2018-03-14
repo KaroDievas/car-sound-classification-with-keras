@@ -4,3 +4,6 @@ CarSoundClassificationWithKeras.egg-info/*
 .idea
 venv
 __pycache__
+Data/raw_split
+Data/train
+Data/validation
