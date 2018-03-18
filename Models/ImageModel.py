@@ -30,3 +30,5 @@ class ImageModel:
         ax.set_xticklabels([])
         plt.savefig(image_path, bbox_inches='tight', format='png', pad_inches=0, transparent=True, dpi=100)
         plt.clf()
+        plt.cla()
+        plt.close('all')
