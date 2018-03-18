@@ -1,7 +1,8 @@
 import os
 import shutil
-from Models import SoundModel, ImageModel
-from Definitions import DATA_RAW_DIR, DATA_TRAIN_DIR, DATA_VALIDATION_DIR, DATA_DIR
+import _thread
+from Models import SoundModel, ImageModel, ThreadedImageModel
+from Definitions import DATA_RAW_DIR, DATA_TRAIN_DIR, DATA_VALIDATION_DIR, DATA_DIR, CPU_NUMBER
 
 
 class DataModel:
@@ -14,7 +15,7 @@ class DataModel:
         self.empty_dir_if_exist(split_dir)
         self.create_dir_if_not_exist(split_dir)
 
-        if (os.path.isdir(DATA_RAW_DIR)):
+        if os.path.isdir(DATA_RAW_DIR):
             cars_list = [entry for entry in os.listdir(DATA_RAW_DIR) if
                          os.path.isdir(os.path.join(DATA_RAW_DIR, entry))]
             for car in cars_list:
@@ -37,27 +38,60 @@ class DataModel:
                 for file in files:
                     file_without_ext = os.path.splitext(os.path.basename(file))[0]
 
-                    sound_model.split_file(file, os.path.join(split_car_dir, file_without_ext + "%04d.wav"), 0.2)
+                    sound_model.split_file(file, os.path.join(split_car_dir, file_without_ext + "-%04d.wav"), 0.4)
 
                 files_for_images = [os.path.join(split_car_dir, entry) for entry in os.listdir(split_car_dir) if
                                     os.path.isfile(os.path.join(split_car_dir, entry))]
                 count = len(files_for_images)
                 # we need to have same amout images on train and validation dirs
                 image_in_dir = count // 2
+
                 i = 0
+                if CPU_NUMBER > 1:
+                    threads = []
+                    thread_id = 1
+                    images_per_thread = image_in_dir // CPU_NUMBER
+                    while thread_id <= CPU_NUMBER:
+                        thread = ThreadedImageModel.ThreadedImageModel(thread_id, i,
+                                                                       i + images_per_thread, files_for_images,
+                                                                       train_dir)
+                        thread.start()
+                        threads.append(thread)
+                        i += images_per_thread
+                        thread_id += 1
+                    # Wait for all threads to complete
+                    for t in threads:
+                        t.join()
+                    print("Finished generating train data")
 
-                while i < image_in_dir:
-                    print("Generating image for " + files_for_images[i])
-                    data, sr = sound_model.load_file(files_for_images[i])
-                    image_model.generate_morlet_scalogram(data, os.path.join(train_dir, str(i) + ".png"))
-                    i += 1
+                    i = image_in_dir
+                    threads = []
+                    thread_id = 1
+                    while thread_id <= CPU_NUMBER:
+                        thread = ThreadedImageModel.ThreadedImageModel(thread_id, i,
+                                                                       i + images_per_thread, files_for_images,
+                                                                       validation_dir)
+                        thread.start()
+                        threads.append(thread)
+                        i += images_per_thread
+                        thread_id += 1
+                    # Wait for all threads to complete
+                    for t in threads:
+                        t.join()
+                    print("Finished generating validation data")
+                else:
+                    while i < image_in_dir:
+                        print("Generating image for " + files_for_images[i])
+                        data, sr = sound_model.load_file(files_for_images[i])
+                        image_model.generate_morlet_scalogram(data, os.path.join(train_dir, str(i) + ".png"))
+                        i += 1
 
-                i = image_in_dir
-                while i < (image_in_dir * 2):
-                    print("Generating image for " + files_for_images[i])
-                    data, sr = sound_model.load_file(files_for_images[i])
-                    image_model.generate_morlet_scalogram(data, os.path.join(validation_dir, str(i) + ".png"))
-                    i += 1
+                    i = image_in_dir
+                    while i < (image_in_dir * 2):
+                        print("Generating image for " + files_for_images[i])
+                        data, sr = sound_model.load_file(files_for_images[i])
+                        image_model.generate_morlet_scalogram(data, os.path.join(validation_dir, str(i) + ".png"))
+                        i += 1
                 print("Done generating data")
         else:
             print("Error")
