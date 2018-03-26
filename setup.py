@@ -10,11 +10,11 @@ setup(
     license='MIT',
     install_requires=[
         'keras',
-        'pydub',
         'theano',
         'tensorflow',
         'numpy',
-        'librosa'
+        'librosa',
+        'matplotlib'
     ],
-    python_requires='~=3.5',
+    python_requires='~=3.6',
 )
